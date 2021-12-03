@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Create
+{% endblock %}
+
+{% block main %}
+
+<h1>
+    Create your monster
+</h1>
+
+<form action="/create" method="post">
+    <div>
+        <label for="bg_name" class="form-label">Name</label>
+        <input type="text" class="form-control" name="bg_name" id="bg_name" placeholder="Name your foe">
+    </div>
+    <div>
+        <label for="bg_class" class="form-label">Class</label>
+        <input type="text" class="form-control" name ="bg_class" id="bg_class" placeholder="Enter a Class">
+    </div>
+    <button type="submit" class="btn btn-danger">Create</button>
+</form>
+
+{% endblock %}

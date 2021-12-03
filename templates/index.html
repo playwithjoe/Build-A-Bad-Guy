@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block main %}
+<h1>My Creations</h1>
+<table>
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Class
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for monster in monsters %}
+        <tr>
+            <td>
+                {{ monster.name }}
+            </td>
+            <td>
+                {{ monster.class }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h2><a href="/create">Create a new Bad Guy</a></h2>
+
+{% endblock %}
