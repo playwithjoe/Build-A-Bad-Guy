@@ -3,6 +3,8 @@ import sqlite3 as sql
 
 from werkzeug.utils import redirect
 
+from helpers import find_monster
+
 app = Flask(__name__)
 
 app.config["TEMPLATES_AUTO_RELOAD"] = True
