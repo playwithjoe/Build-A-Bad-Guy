@@ -1,5 +1,9 @@
 from flask import Flask, render_template, g, request, session
 import sqlite3 as sql
+import json
+import requests
+
+API_HOME = "https://www.dnd5eapi.co/api/"
 
 from werkzeug.utils import redirect
 
@@ -18,14 +22,15 @@ def index():
         con.row_factory = sql.Row
         db = con.cursor()
         db.execute("SELECT * FROM monsters")
-        monsters = db.fetchall()
+        my_monsters = db.fetchall()
+
+        find_monster("Adult Black Dragon")
+        
 
     except:
         return render_template("oops.html")
 
-    find_monster()
-
-    return render_template("index.html", monsters=monsters)
+    return render_template("index.html", my_monsters=my_monsters)
 
 @app.route("/create", methods=["GET", "POST"])
 def create():
@@ -37,7 +42,7 @@ def create():
 
             bg_name = request.form.get("bg_name")
             bg_class = request.form.get("bg_class")
-            
+
             db.execute("INSERT INTO monsters (name, class) VALUES (?,?)", (bg_name, bg_class))
             con.commit()
             db.close()
@@ -53,9 +58,15 @@ def oops():
 
     return render_template("oops.html")
 
-def find_monster():
+def find_monster(monster_name):
     try:
-        response = request.get("https://www.dnd5eapi.co/api/spells/acid-arrow/")
-        print(response)
+        response = requests.get(f"{API_HOME}/monsters/")
+        monster_list = response.json()
+
+        for item in monster_list["results"]:
+            if monster_name == item["name"]:
+                monster = item["name"]
+                new = requests.get(f"{API_HOME}/monsters/{monster}")
+                print(new)
     except:
         print("No Response")
