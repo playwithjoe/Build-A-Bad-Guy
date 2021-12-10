@@ -3,8 +3,6 @@ import sqlite3 as sql
 
 from werkzeug.utils import redirect
 
-from helpers import find_monster
-
 app = Flask(__name__)
 
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -22,11 +20,10 @@ def index():
         db.execute("SELECT * FROM monsters")
         monsters = db.fetchall()
 
-        for monster in monsters:
-            print(monster["name"])
-
     except:
         return render_template("oops.html")
+
+    find_monster()
 
     return render_template("index.html", monsters=monsters)
 
@@ -55,3 +52,10 @@ def create():
 def oops():
 
     return render_template("oops.html")
+
+def find_monster():
+    try:
+        response = request.get("https://www.dnd5eapi.co/api/spells/acid-arrow/")
+        print(response)
+    except:
+        print("No Response")
