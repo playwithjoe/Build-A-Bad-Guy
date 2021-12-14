@@ -6,6 +6,31 @@
 
 {% block main %}
 
+<div>
+    <form action="/search" method="post">
+        <label for="search-monster" class="form-label">Search Monsters</label>
+        <input type="text" class="form-control" id="search-monster" name="search_monster" placeholder="Type a monster name ex. Adult Black Dragon" autocomplete="off">
+        <button type="submit" class="btn btn-success">Search</button>
+    </form>
+</div>
 
+{% if monster_result %}
+<h3>{{ monster_result.name }}</h3>
+<ul style="list-style-type: none;">
+    <li>
+        {{ monster_result.size }} {{ monster_result.type }},{{ monster_result.alignment }}
+    </li>
+    <li>
+        Armor Class {{ monster_result.armor_class }}
+    </li>
+    <li>
+        Hit Points {{ monster_result.hit_points }}
+    </li>     
+    <li>
+        Speed {{ monster_result.speed["walk"] }}
+    </li>
+        
+</ul>
+{% endif %}
 
 {% endblock %}

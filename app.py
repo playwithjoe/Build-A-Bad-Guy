@@ -55,11 +55,18 @@ def oops():
 
     return render_template("oops.html")
 
-@app.route("/search")
+@app.route("/search", methods=["GET", "POST"])
 def search():
 
-    return render_template("search.html")
+    if request.method == "POST":
+        monster = request.form.get("search_monster")
 
+        monster_result = find_monster(monster)
+
+        return render_template("search.html", monster_result=monster_result)
+
+    else:
+        return render_template("search.html")
 
 def find_monster(monster_name):
     try:
