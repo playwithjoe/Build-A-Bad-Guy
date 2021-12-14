@@ -24,9 +24,6 @@ def index():
         db.execute("SELECT * FROM monsters")
         my_monsters = db.fetchall()
 
-        find_monster("Adult Black Dragon")
-        
-
     except:
         return render_template("oops.html")
 
@@ -58,6 +55,12 @@ def oops():
 
     return render_template("oops.html")
 
+@app.route("/search")
+def search():
+
+    return render_template("search.html")
+
+
 def find_monster(monster_name):
     try:
         response = requests.get(f"{API_HOME}/monsters/")
@@ -65,8 +68,8 @@ def find_monster(monster_name):
 
         for item in monster_list["results"]:
             if monster_name == item["name"]:
-                monster = item["name"]
+                monster = item["index"]
                 new = requests.get(f"{API_HOME}/monsters/{monster}")
-                print(new)
+                return new.json()
     except:
         print("No Response")
